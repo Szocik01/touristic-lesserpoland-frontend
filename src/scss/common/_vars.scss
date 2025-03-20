@@ -1,0 +1,48 @@
+$color-primary: #005023;
+$color-primary-variant: #00B86E;
+$color-on-primary: #FFFFFF;
+$color-navigation-bar-background: #005023;
+$color-navigation-bar-text: #FFFFFF;
+$color-navigation-bar-tint: #FFFFFF;
+$color-tinted-icon: #005023;
+$color-button-background: #00883b;
+$color-secondary-variant: #00EB67;
+$color-button-tint: #002410;
+$color-button-text: white;
+$color-primary-background: #FFFFFF;
+$color-primary-background-wave: rgb(233, 255, 243);
+$color-primary-text: #1F2E25;
+$color-secondary-text: #334C3D;
+$color-list-indicator: #00B850;
+$color-icon: #005023;
+$color-card-background: #FFFFFF;
+$color-primary-card-text: #1F2E25;
+$color-secondary-card-text: #334C3D;
+$color-card-icon: #334C3D;
+$color-card-tint: #005023;
+$color-separator: rgba(28, 39, 40, 0.5);
+$color-separator-variant: rgba(241, 248, 249, 0.5);
+$color-error: #e60b33;
+$color-track: #0E50FA;
+$color-custom-color-01: #CBCBCB;
+$color-custom-color-02: #C5FCFF;
+$color-custom-color-03: #FBCFCF;
+$color-custom-color-04: #D9AAFF;
+
+
+
+$navbar-heigth: 80px;
+
+
+
+//breakpoints
+
+$sm-min: 576px !default;
+$md-min: 768px !default;
+$lg-min: 992px !default;
+$xl-min: 1200px !default;
+
+$xs-max: ($sm-min - 1);
+$sm-max: ($md-min - 1);
+$md-max: ($lg-min - 1);
+$lg-max: ($xl-min - 1);

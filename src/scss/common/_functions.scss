@@ -1,0 +1,59 @@
+@mixin media-up($width) {
+  @media (min-width: #{$width}) {
+    @content;
+  }
+}
+
+@mixin media-down($width) {
+  @media (max-width: #{$width}) {
+    @content;
+  }
+}
+
+@mixin sm-up {
+  @media (min-width: #{$sm-min}) {
+    @content;
+  }
+}
+
+@mixin md-up {
+  @media (min-width: #{$md-min}) {
+    @content;
+  }
+}
+
+@mixin lg-up {
+  @media (min-width: #{$lg-min}) {
+    @content;
+  }
+}
+
+@mixin xl-up {
+  @media (min-width: #{$xl-min}) {
+    @content;
+  }
+}
+
+@mixin xs-down {
+  @media (max-width: #{$xs-max}) {
+    @content;
+  }
+}
+
+@mixin sm-down {
+  @media (max-width: #{$sm-max}) {
+    @content;
+  }
+}
+
+@mixin md-down {
+  @media (max-width: #{$md-max}) {
+    @content;
+  }
+}
+
+@mixin lg-down {
+  @media (max-width: #{$lg-max}) {
+    @content;
+  }
+}

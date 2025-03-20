@@ -1,0 +1,28 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+  align-items: center;
+  .http-error-text {
+    width: 100%;
+    color: $color-error;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  .toggle-dialog-text{
+    color: $color-primary-text;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    button{
+        background: none;
+        border: none;
+        color: $color-primary-variant;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.footer{
+    background-color: $color-primary;
+    color: $color-on-primary;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 4.5rem 0;
+    .logo{
+        height: auto;
+        width: 170px;
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+    .site-map-header{
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: $color-on-primary;
+        margin-bottom: 1.5rem;
+    }
+    .site-map{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

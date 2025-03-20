@@ -1,0 +1,527 @@
+.listing-card {
+  position: relative;
+  width: 100%;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  background: #ffffffaa;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+
+  &:hover {
+    img {
+      transform: scale(1.03);
+    }
+  }
+
+  @include media-up("sm") {
+    gap: 1rem;
+  }
+  .image-container {
+    width: 100%;
+    min-width: 80px;
+    max-width: 210px;
+    aspect-ratio: 5/3;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: lightgray;
+
+    &.active-image {
+      background-color: gray;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.3s ease-out;
+    }
+  }
+
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
+    padding: 0.5rem;
+    color: #000;
+
+    .title {
+      font-size: 1rem;
+      font-weight: bold;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .content {
+      font-size: 0.7rem;
+      color: #000000cc;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @include media-up("sm") {
+      .title {
+        font-size: 1.2rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .content {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .link {
+    position: absolute;
+    inset: 0;
+  }
+}
+
+.logo {
+  height: 100%;
+  width: 100%;
+  fill: $color-navigation-bar-tint;
+  &.with-animation {
+    fill: transparent;
+    path {
+      opacity: 0.5;
+      stroke-dasharray: 770;
+      stroke-dashoffset: 770;
+    }
+  }
+  &.start-animation {
+    path {
+      animation: show-and-fill-svg 3s ease forwards;
+    }
+  }
+}
+
+.MuiButtonBase-root.MuiPaginationItem-root:not(
+    .MuiPaginationItem-previousNext
+  ) {
+  background-color: $color-button-background;
+  color: $color-button-text;
+  &.Mui-selected {
+    background-color: $color-secondary-variant;
+    color: $color-button-text;
+  }
+}
+
+.MuiSlider-root:not(.Mui-disabled) {
+  color: $color-button-background;
+  .MuiSlider-rail {
+    background-color: $color-button-background;
+  }
+  .MuiSlider-track {
+    background-color: $color-button-background;
+    border: 1px solid $color-button-background;
+  }
+  .MuiSlider-thumb {
+    background-color: $color-button-background;
+  }
+}
+
+.MuiButton-root {
+  border-radius: 2px;
+  width: fit-content;
+  &.MuiButton-contained,
+  &.MuiButton-outlined {
+    min-height: 38px;
+  }
+  &:not(.MuiButton-colorError, .Mui-disabled) {
+    &.MuiButton-contained {
+      background-color: $color-button-background;
+      color: $color-button-text;
+      &.active {
+        background-color: $color-primary-variant;
+      }
+    }
+    &.MuiButton-outlined {
+      background-color: $color-button-text;
+      border: 1px solid $color-button-background;
+      color: $color-button-background;
+    }
+    &.MuiButton-text {
+      color: $color-button-background;
+    }
+  }
+}
+
+.MuiAutocomplete-listbox {
+  .MuiAutocomplete-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 0.25rem;
+    .name {
+      font-size: 0.95rem;
+      color: $color-primary-text;
+      font-weight: 600;
+    }
+    .city {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: $color-secondary-text;
+    }
+    .area-type {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: $color-secondary-text;
+      gap: 0.25rem;
+    }
+  }
+}
+
+.MuiCheckbox-root.MuiButtonBase-root {
+  &.Mui-checked {
+    color: $color-button-background;
+  }
+}
+
+.MuiButtonBase-root.MuiTab-root {
+  min-height: 52px;
+  &.Mui-selected {
+    color: $color-primary;
+  }
+}
+
+.MuiTabs-root {
+  .MuiTabs-indicator {
+    background-color: $color-primary;
+  }
+}
+
+.MuiInputBase-root {
+  background-color: $color-primary-background !important;
+}
+
+.categories-list {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: nowrap;
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 4rem;
+    span {
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+  }
+  &.contrast {
+    .selectable-button {
+      background-color: $color-button-background;
+      color: $color-button-text;
+      &:hover {
+        background-color: transparentize(
+          $color: $color-button-background,
+          $amount: 0.15
+        );
+      }
+      &.active {
+        background-color: $color-secondary-variant;
+        color: $color-button-text;
+        &:hover {
+          background-color: $color-secondary-variant;
+        }
+      }
+    }
+  }
+}
+
+.selectable-button {
+  color: $color-button-background;
+  &:hover {
+    background-color: transparentize(
+      $color: $color-button-background,
+      $amount: 0.65
+    );
+  }
+  &.active {
+    background-color: $color-button-background;
+    color: $color-button-text;
+    &:hover {
+      background-color: $color-button-background;
+    }
+  }
+  &.elevated {
+    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+      0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-button-background;
+  color: $color-button-text;
+  &.small {
+    width: 32px;
+    height: 32px;
+    svg {
+      font-size: 1.25rem;
+    }
+  }
+  &.medium {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+  &.large {
+    width: 48px;
+    height: 48px;
+    font-size: 2rem;
+  }
+  &.dark {
+    background-color: $color-primary;
+  }
+  .MuiSvgIcon-root {
+    font-size: inherit;
+  }
+}
+
+.route-params {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  .route-params-entry {
+    font-size: 0.9rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: row;
+    align-items: center;
+    color: $color-secondary-text;
+    text-wrap: nowrap;
+    span {
+      text-wrap: wrap;
+      font-weight: 600;
+    }
+  }
+}
+
+.skeleton-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .skeleton-body {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    .skeleton-text-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+}
+
+.custom-tooltip {
+  background-color: $color-primary-background;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  .x-value {
+    font-weight: 600;
+    color: $color-primary-text;
+  }
+  .y-value {
+    font-weight: 500;
+    color: $color-secondary-text;
+  }
+}
+
+.badge {
+  background-color: $color-primary;
+  color: $color-on-primary;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.25rem;
+  justify-content: center;
+  width: fit-content;
+  &.rounded {
+    border-radius: 20px;
+  }
+  &.small {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.3rem;
+  }
+  &.large {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+.gallery {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 1.5rem;
+  column-gap: 1rem;
+  .title {
+    width: 100%;
+    font-size: 1.85rem;
+    font-weight: bold;
+    color: $color-primary-text;
+  }
+  .image-container {
+    width: calc(20% - (1rem * 4) / 5);
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 4px;
+    flex-shrink: 0;
+    cursor: pointer;
+    overflow: hidden;
+    &:hover {
+      .thumb {
+        transform: scale(1.04);
+      }
+    }
+    .thumb {
+      transition: transform 0.3s ease-out;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  @include md-down {
+    .image-container {
+      width: calc(25% - (1rem * 3) / 4);
+    }
+  }
+  @include sm-down {
+    .image-container {
+      width: calc(33.3333% - (1rem * 2) / 3);
+    }
+  }
+  @include xs-down {
+    .image-container {
+      width: calc(50% - 1rem / 2);
+    }
+  }
+}
+
+.page-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  h1 {
+    display: flex;
+    flex-direction: row;
+    word-break: break-word;
+    gap: 1rem;
+    align-items: center;
+  }
+  @include md-down {
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+.MuiIconButton-root.delete-button:not(.Mui-disabled) {
+  background-color: $color-error;
+  color: white;
+  &:hover {
+    background-color: lighten($color: $color-error, $amount: 5%);
+  }
+}
+.MuiIconButton-root.edit-button:not(.Mui-disabled) {
+  background-color: $color-primary;
+  color: white;
+  &:hover {
+    background-color: lighten($color: $color-primary, $amount: 5%);
+  }
+}
+
+.MuiIconButton-root.confirm-button:not(.Mui-disabled) {
+  background-color: $color-primary;
+  color: white;
+  &:hover {
+    background-color: lighten($color: $color-primary, $amount: 5%);
+  }
+}
+.MuiIconButton-root.cancel-button:not(.Mui-disabled) {
+  background-color: $color-primary-variant;
+  color: white;
+  &:hover {
+    background-color: lighten($color: $color-primary-variant, $amount: 5%);
+  }
+}
+
+.MuiIconButton-root.favourite-button {
+  color: white;
+  padding: 4px;
+}
+
+.error {
+  color: $color-error;
+}
+
+@keyframes show-and-fill-svg {
+  50% {
+    opacity: 1;
+  }
+  75% {
+    stroke-dashoffset: 0;
+    fill: transparent;
+  }
+  100% {
+    fill: $color-navigation-bar-tint;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}

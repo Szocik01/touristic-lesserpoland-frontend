@@ -1,0 +1,116 @@
+.trip-card {
+  background-color: $color-primary-background;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  &:hover {
+    .card-thumb img {
+      transform: scale(1.1);
+    }
+  }
+  &.focused{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+    .card-thumb{
+      border: 4px solid $color-primary-variant;
+    }
+  }
+  &.horizontal{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .card-thumb{
+      width: 25%;
+      min-width: 4rem;
+      aspect-ratio: 1;
+      flex-shrink: 0;
+    }
+    .card-body{
+      position: relative;
+      min-height: unset;
+      .text-content{
+        gap: 1rem;
+      }
+      .category{
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .link{
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+  .card-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 5px;
+    .private-badge{
+      position: absolute;
+      left: 6px;
+      bottom: 6px;
+      
+    }
+    .actions {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      z-index: 10;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 0.25rem;
+      align-items: center;
+      cursor: pointer;
+    }
+    img {
+      transform: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: 0.3s ease-out transform;
+    }
+  }
+  .card-body{
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    min-height: 6rem;
+    .text-content{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        .title{
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: $color-primary-card-text;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .params-container{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            .param{
+                font-size: 0.65rem;
+                color: $color-secondary-card-text;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.25rem;
+            }
+        }
+    }
+  }
+}

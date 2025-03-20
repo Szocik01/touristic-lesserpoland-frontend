@@ -1,0 +1,48 @@
+.filters-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  .visible-filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    align-items: center;
+    .buttons-container{
+        display: flex;
+        gap: 1rem;
+    }
+    .categories-list{
+        width: auto;
+    }
+  }
+
+  @include xs-down{
+    .visible-filters{
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  }
+}
+
+.pagination-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-map{
+  aspect-ratio: 2.2;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.no-routes-text{
+  margin: 4rem 0;
+  width: 100%;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $color-secondary-text;
+  text-align: center;
+}
