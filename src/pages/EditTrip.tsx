@@ -242,7 +242,7 @@ const EditTrip = () => {
                 formData.append("name", trip.name);
                 formData.append("description", editorContent);
                 formData.append("color", trip.color);
-                formData.append("public", trip.public.toString());
+                formData.append("isPublic", trip.public.toString());
                 deletedPhotosIdsRef.current.forEach((id) => {
                   formData.append("deletedImagesIds", id.toString());
                 });
