@@ -76,6 +76,25 @@ const AuthFormInputs: FC<AuthFormProps> = (props) => {
           onBlur={setErrorVisibilityHandler}
         />
       )}
+            {values.userName !== undefined && (
+        <TextField
+          fullWidth
+          name="userName"
+          type="text"
+          variant="outlined"
+          label="Nazwa użytkownika"
+          value={values.userName}
+          error={canDisplayValueError.userName && !!valueErrors.userName}
+          helperText={
+            canDisplayValueError.userName && valueErrors.userName
+              ? valueErrors.userName
+              : " "
+          }
+          onChange={onChange}
+          onFocus={unsetErrorVisibilityHandler}
+          onBlur={setErrorVisibilityHandler}
+        />
+      )}
       {values.password !== undefined && (
         <FormControl
           fullWidth
@@ -148,25 +167,6 @@ const AuthFormInputs: FC<AuthFormProps> = (props) => {
               : " "}
           </FormHelperText>
         </FormControl>
-      )}
-      {values.userName !== undefined && (
-        <TextField
-          fullWidth
-          name="userName"
-          type="text"
-          variant="outlined"
-          label="Nazwa użytkownika"
-          value={values.userName}
-          error={canDisplayValueError.userName && !!valueErrors.userName}
-          helperText={
-            canDisplayValueError.userName && valueErrors.userName
-              ? valueErrors.userName
-              : " "
-          }
-          onChange={onChange}
-          onFocus={unsetErrorVisibilityHandler}
-          onBlur={setErrorVisibilityHandler}
-        />
       )}
       {values.rememberMe !== undefined && (
         <FormControlLabel

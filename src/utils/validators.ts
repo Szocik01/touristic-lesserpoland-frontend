@@ -16,6 +16,19 @@ class Validators {
     return "";
   }
 
+  static validateUserName(userName: string) {
+    if (userName.trim().length === 0) {
+      return "Proszę podać nazwę użytkownika.";
+    }
+    if (userName.length < 3) {
+      return "Nazwa użytkownika powinna mieć przynajmniej 3 znaki.";
+    }
+    if (userName.length > 20) {
+      return "Nazwa użytkownika powinna mieć maksymalnie 20 znaków.";
+    }
+    return "";
+  }
+
   static validateConfirmPassword(password: string, confirmPassword: string) {
     if (password !== confirmPassword) {
       return "Hasła nie są takie same.";

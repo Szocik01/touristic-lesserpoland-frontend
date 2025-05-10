@@ -16,6 +16,7 @@ type RegisterProps = {
 const Register = (props: RegisterProps) => {
   const [registerData, setRegisterData] = useState({
     email: "",
+    userName: "",
     password: "",
     confirmPassword: "",
   });
@@ -59,6 +60,7 @@ const Register = (props: RegisterProps) => {
   }, []);
 
   const emailError = Validators.validateEmail(registerData.email);
+  const userNameError = Validators.validateUserName(registerData.userName);
   const passwordError = Validators.validatePassword(registerData.password);
   const confirmPasswordError = Validators.validateConfirmPassword(
     registerData.password,
@@ -73,7 +75,7 @@ const Register = (props: RegisterProps) => {
         const requestBody: SignUpBody = {
           email: registerData.email,
           password: registerData.password,
-          userName: registerData.email,
+          userName: registerData.userName,
         };
         sendRegisterRequest(handleRegisterResponse, handleRegisterError, {
           method: "POST",
@@ -89,6 +91,7 @@ const Register = (props: RegisterProps) => {
         valueErrors={{
           email: emailError,
           password: passwordError,
+          userName: userNameError,
           confirmPassword: confirmPasswordError,
         }}
         onChange={function (event) {
