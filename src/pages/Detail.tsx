@@ -1,9 +1,9 @@
-import { Favorite, FavoriteBorder, Lock } from "@mui/icons-material";
+import { Download, Favorite, FavoriteBorder, Lock } from "@mui/icons-material";
 import { API_CALL_URL_BASE } from "../utils/constants";
 import useHttp from "../hooks/useHttp";
 import { Route, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { LatLng, ParsedTrip, TripDTO } from "../types/api/trips";
+import { useEffect, useMemo, useState } from "react";
+import { GeoJsonFeature, GeoJsonFeatureCollection, LatLng, ParsedTrip, TripDTO } from "../types/api/trips";
 import ContentLoading from "../components/utils/ContentLoading";
 import HeaderImages from "../components/detail/HeaderImages";
 import DetailMap from "../components/detail/DetailMap";
@@ -18,6 +18,9 @@ import CommentsListing from "../components/detail/CommentsListing";
 import RouteElevationChart from "../components/shared/RouteElevationChart";
 import { Weather } from "../components/detail/Weather";
 import { Badge } from "../components/shared/Badge";
+import { Button } from "@mui/material";
+import { RouteFormatConverter } from "../utils/routeFormatConverter";
+import { downloadFile } from "../utils/downloadFile";
 
 const Detail = () => {
   const [trip, setTrip] = useState<ParsedTrip>();
@@ -97,6 +100,31 @@ const Detail = () => {
     return `${API_CALL_URL_BASE}${image.path}`;
   });
 
+  const tripGeoJsonFeatureCollection: GeoJsonFeatureCollection | undefined = useMemo(()=>{
+    if (!trip) return undefined;
+    return {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          properties: {},
+          geometry: trip.route,
+        },
+        ...trip.points.map((point) => {
+          return {
+            type: "Feature" as const,
+            properties: {
+              name: point.name,
+            },
+            geometry: point.coordinates,
+          };
+        }),
+      ],
+    }
+  },[
+    trip
+  ])
+
   useEffect(() => {
     if (!userStateLoaded) {
       return;
@@ -171,7 +199,7 @@ const Detail = () => {
                 )}
               </div>
             </div>
-            {imagesUrls && (
+            {imagesUrls && imagesUrls.length > 0 && (
               <div className="col-12 mb-5">
                 <HeaderImages
                   imagesUrls={imagesUrls.slice(0, 5)}
@@ -184,6 +212,26 @@ const Detail = () => {
                     });
                   }}
                 />
+              </div>
+            )}
+            {trip && (
+              <div className="col-12 mb-4 download-route-buttons">
+                <Button variant="outlined" startIcon={<Download />} onClick={() => {
+                  const fileName = `${trip.name}-${new Date().toISOString()}.gpx`;
+                  const gpxContent = RouteFormatConverter.geoJsonToGpx(tripGeoJsonFeatureCollection!!);
+                  const gpxBlob = new Blob([gpxContent], { type: "application/gpx+xml" });
+                  downloadFile(gpxBlob, fileName);
+                }}>
+                  Pobierz jako GPX
+                </Button>
+                <Button variant="outlined" startIcon={<Download />} onClick={() => {
+                  const fileName = `${trip.name}-${new Date().toISOString()}.json`;
+                  const geoJsonContent = JSON.stringify(tripGeoJsonFeatureCollection, null, 2);
+                  const geoJsonBlob = new Blob([geoJsonContent], { type: "application/json" });
+                  downloadFile(geoJsonBlob, fileName);
+                }}>
+                  Pobierz jako GeoJSON
+                </Button>
               </div>
             )}
             {trip && (

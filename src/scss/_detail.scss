@@ -217,6 +217,13 @@
     }
   }
 
+  .download-route-buttons{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
   .map {
     width: 100%;
     border-radius: 6px;
