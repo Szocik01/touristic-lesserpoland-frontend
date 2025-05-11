@@ -184,7 +184,7 @@
     }
   }
 
-  .detail-header-section{
+  .detail-header-section {
     margin-bottom: 4rem;
     display: flex;
     flex-direction: column;
@@ -211,13 +211,13 @@
         }
       }
     }
-    .private-badge{
-      background-color: rgb(239, 239, 239) ;
+    .private-badge {
+      background-color: rgb(239, 239, 239);
       color: rgb(118, 118, 118);
     }
   }
 
-  .download-route-buttons{
+  .download-route-buttons {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -236,6 +236,7 @@
       font-size: 1.1rem;
     }
   }
+
   .weather-container {
     width: 100%;
     display: flex;
@@ -250,6 +251,7 @@
       display: flex;
       flex-direction: row;
       gap: 1rem;
+      flex-wrap: wrap;
     }
     .weather-tab-contents-container {
       position: relative;
@@ -409,5 +411,42 @@
       flex-direction: column;
       gap: 1rem;
     }
+  }
+}
+
+.weather-detail-dialog-body {
+  padding: 0 1rem;
+  .weather-detail-dialog-header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .weather-responsive-chart-container {
+    margin-bottom: 2rem;
+  }
+  .weather-tooltip{
+    padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+    position: relative;
+  }
+  .weather-icon-container{
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    width: 2rem;
+    height: 2rem;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      -o-object-fit: cover;
+      -o-object-position: center;
+    }
+  }
+  @include sm-down {
+    padding: 0;
   }
 }

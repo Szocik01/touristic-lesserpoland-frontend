@@ -277,10 +277,10 @@ const Detail = () => {
                 />
               </div>
             )}
-            <div className="col-12 mb-5">
+            <div className="col-12 col-lg-9 mb-5">
               <Weather weatherForecast={trip.weather} />
             </div>
-            <div className="col-9 mb-5">
+            <div className="col-12 col-lg-9 mb-5">
               <div
                 className="description"
                 dangerouslySetInnerHTML={{ __html: trip.description }}
