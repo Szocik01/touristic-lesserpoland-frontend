@@ -13,6 +13,7 @@ import { API_CALL_URL_BASE } from "../../utils/constants";
 import {
   GraphHopperApiSuccessResponse,
   Point,
+  Route,
   TripTypes,
 } from "../../types/api/trips";
 import { useAppDispatch } from "../../redux/store";
@@ -21,7 +22,7 @@ import { planerSliceActions } from "../../redux/planerSlice";
 type AddTripDialogProps = {
   open: boolean;
   onClose: () => void;
-  route: GraphHopperApiSuccessResponse;
+  route: Route;
   category: TripTypes;
   points: (Point & { name: string })[];
   token: string;
@@ -172,10 +173,10 @@ const AddTripDialog = (props: AddTripDialogProps) => {
             formData.append("type", category);
             formData.append("route", JSON.stringify(route.points));
             formData.append("points", JSON.stringify(points));
-            formData.append("ascend", route.ascend.toString());
-            formData.append("descend", route.descend.toString());
-            formData.append("distance", route.distance.toString());
-            formData.append("time", route.time.toString());
+            {route.ascend && formData.append("ascend", route.ascend.toString());}
+            {route.descend && formData.append("descend", route.descend.toString())};
+            {route.distance && formData.append("distance", route.distance.toString())};
+            {route.time && formData.append("time", route.time.toString())};
             photos.forEach((photo) => {
               formData.append("images", photo.file);
             });

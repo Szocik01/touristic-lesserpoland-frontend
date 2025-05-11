@@ -1,19 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+  GeoJsonFeature,
+  GeoJsonLineString,
   GraphHopperApiSuccessResponse,
   LatLng,
   LatLngAlt,
   ParsedTrip,
   PlaceHintParsed,
   Point,
+  Route,
 } from "../types/api/trips";
-import { clear } from "console";
 
 type PlanerSliceState = {
   planer: {
     points: (Point & { name: string })[];
     routeName?: string;
-    foundRoute?: GraphHopperApiSuccessResponse;
+    foundRoute?: Route;
     focusedPointIndex?: number;
   };
   search: {
@@ -129,6 +131,23 @@ const planerSlice = createSlice({
         state.planer.focusedPointIndex
       ].name = `${coordinates[1]},${coordinates[0]}`;
     },
+    setPointsAndRouteFromGeoJson: (
+      state,
+      action: PayloadAction<{ points: GeoJsonFeature[]; route: GeoJsonFeature }>
+    ) => {
+      state.planer.points = action.payload.points.map((point, index) => {
+        return {
+          coordinates: point.geometry.coordinates as LatLngAlt,
+          name:
+            point.properties.name ||
+            `${(point.geometry.coordinates as LatLngAlt)[1].toFixed(6)},${(point.geometry.coordinates as LatLngAlt)[0].toFixed(6)}`,
+          order: index,
+        };
+      });
+      state.planer.foundRoute = {
+        points: action.payload.route.geometry as GeoJsonLineString,
+      };
+    },
     setFocusedPointIndex: (state, action: PayloadAction<number>) => {
       state.planer.focusedPointIndex = action.payload;
     },
@@ -161,7 +180,7 @@ const planerSlice = createSlice({
     },
     clearFocusedTripId: (state) => {
       state.search.focusedTripId = undefined;
-    }
+    },
   },
 });
 

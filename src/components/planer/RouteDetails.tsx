@@ -1,14 +1,10 @@
 import {
-  AccessTime,
-  ArrowDownward,
-  ArrowUpward,
   ChevronLeft,
   Save,
-  Timeline,
 } from "@mui/icons-material";
 import {
-  GraphHopperApiSuccessResponse,
   Point,
+  Route,
   TripTypes,
 } from "../../types/api/trips";
 import IconBadge from "../shared/IconBadge";
@@ -20,7 +16,7 @@ import { Fragment } from "react/jsx-runtime";
 import RouteElevationChart from "../shared/RouteElevationChart";
 
 type RouteDetailsProps = {
-  route: GraphHopperApiSuccessResponse;
+  route: Route;
   category: TripTypes;
   points: (Point & { name: string })[];
   onPointClick: (index: number) => void;
@@ -71,7 +67,7 @@ const RouteDetails = (props: RouteDetailsProps) => {
                 />
                 <span>{point.name}</span>
               </div>
-              {route.details.leg_distance[index] && (
+              { route.details?.leg_distance[index] && (
                 <div className="distance-to-next-point">
                   {RouteUnitConverter.convertMetersToKilometers(
                     route.details.leg_distance[index][2]
@@ -87,7 +83,7 @@ const RouteDetails = (props: RouteDetailsProps) => {
         distance={route.distance}
         time={route.time}
         ascend={route.ascend}
-        descend={route.ascend}
+        descend={route.descend}
       />
       <RouteElevationChart height={150} coordinates={route.points.coordinates}/>
       {!routeName && (

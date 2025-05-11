@@ -7,7 +7,7 @@ const Planer = () => {
   return (
     <MapProvider>
       <div className="planer-container">
-        <OnMapPanel />
+        <OnMapPanel/>
         <PlanerMap/>
       </div>
     </MapProvider>

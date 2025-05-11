@@ -219,14 +219,16 @@ const Detail = () => {
                   </div>
                 </div>
               )}
-            <div className="col-12 mb-5">
-              <RouteParams
-                distance={trip.distance}
-                time={trip.time}
-                ascend={trip.ascend}
-                descend={trip.descend}
-              />
-            </div>
+            {(trip.distance || trip.time || trip.ascend || trip.descend) && (
+              <div className="col-12 mb-5">
+                <RouteParams
+                  distance={trip.distance}
+                  time={trip.time}
+                  ascend={trip.ascend}
+                  descend={trip.descend}
+                />
+              </div>
+            )}
             <div className="col-12 mb-5">
               <Weather weatherForecast={trip.weather} />
             </div>

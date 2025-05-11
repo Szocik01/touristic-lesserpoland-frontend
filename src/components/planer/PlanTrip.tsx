@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import FindRoute from "./FindRoute";
 import RouteDetails from "./RouteDetails";
-import { LatLng, TripTypes } from "../../types/api/trips";
+import { GeoJsonFeature, GeoJsonPoint, LatLng, TripTypes } from "../../types/api/trips";
 import { planerSliceActions } from "../../redux/planerSlice";
 import { MapRef } from "react-map-gl/dist/esm/exports-maplibre";
 import AddTripDialog from "./AddTripDialog";
@@ -82,19 +82,22 @@ const PlanTrip = (props: PlanTripProps) => {
       category={category}
       onCategoryChange={(category) => {
         setCategory(category);
-      }}
+      } }
       onRouteFound={(route) => {
         setActivePage("details");
         dispatch(planerSliceActions.setFoundRoute(route));
-      }}
+      } }
       onHintSelected={(hint) => {
         map?.flyTo({
           padding: planerMapPadding,
           center: hint.point.coordinates.slice(0, 2) as LatLng,
           zoom: 15,
         });
-      }}
-    />
+      } } 
+      onRouteFileUploaded={ (route: GeoJsonFeature, points: GeoJsonFeature[]) => {
+        setActivePage("details");
+        dispatch(planerSliceActions.setPointsAndRouteFromGeoJson({route, points}));
+      } }    />
   );
 };
 
