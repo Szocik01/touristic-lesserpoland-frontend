@@ -17,8 +17,8 @@ type TripCardProps = {
   imageUrl: string;
   title: string;
   category: TripTypes;
-  distance: number;
-  duration: number;
+  distance?: number;
+  duration?: number;
   url: string;
   isFocused?: boolean;
   showOwnerActions?: boolean;
@@ -120,14 +120,14 @@ const TripCard = (props: TripCardProps) => {
                 />
               </div>
             )}
-            <div className="param">
+            {duration && <div className="param">
               <AccessTime fontSize="small" />
               {RouteUnitConverter.convertTimeToString(duration)}
-            </div>
-            <div className="param">
+            </div>}
+            {distance && <div className="param">
               <Timeline fontSize="small" />
               {RouteUnitConverter.convertMetersToKilometers(distance)} km
-            </div>
+            </div>}
           </div>
         </div>
       </div>
