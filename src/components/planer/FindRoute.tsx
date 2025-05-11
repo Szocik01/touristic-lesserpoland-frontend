@@ -103,7 +103,7 @@ const FindRoute = (props: FindRouteProps) => {
           type="button"
           variant="contained"
           fullWidth
-          endIcon={<UploadFile />}
+          startIcon={<UploadFile />}
         >
           Dodaj plik GPX
         </Button>
