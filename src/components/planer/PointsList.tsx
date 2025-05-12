@@ -62,7 +62,8 @@ const PointsList = (props: PointsListProps) => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {planerState.planer.points.map((point, index) => {
+              {planerState.planer.points.map((point, index, points) => {
+                const disabled = planerState.planer.roundTrip && index === points.length - 1
                 return (
                   <Draggable
                     key={`point-${point.order}`}
@@ -84,6 +85,7 @@ const PointsList = (props: PointsListProps) => {
                           freeSolo
                           filterOptions={(x) => x}
                           options={hints}
+                          disabled={disabled}
                           isOptionEqualToValue={(option, value) =>
                             option === value
                           }
@@ -160,6 +162,7 @@ const PointsList = (props: PointsListProps) => {
                           <SelectableButton
                             cssClass="point-action-button"
                             tooltipTitle="Usuń punkt"
+                            disabled={disabled}
                             isActive={false}
                             icon={<Delete />}
                             onClick={() => {
@@ -172,6 +175,7 @@ const PointsList = (props: PointsListProps) => {
                         <SelectableButton
                           cssClass="point-action-button"
                           tooltipTitle="Wskaż na mapie"
+                          disabled={disabled}
                           isActive={
                             planerState.planer.focusedPointIndex === index &&
                             mapState.state === "pointer"
@@ -188,6 +192,7 @@ const PointsList = (props: PointsListProps) => {
                           <SelectableButton
                             cssClass="point-action-button"
                             tooltipTitle="Moja lokalizacja"
+                            disabled={disabled}
                             isActive={
                               loadingCurrentPosition &&
                               planerState.planer.focusedPointIndex === index

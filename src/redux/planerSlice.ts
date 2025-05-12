@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import {
   GeoJsonFeature,
   GeoJsonLineString,
@@ -17,6 +17,7 @@ type PlanerSliceState = {
     routeName?: string;
     foundRoute?: Route;
     focusedPointIndex?: number;
+    roundTrip: boolean;
   };
   search: {
     trips: ParsedTrip[];
@@ -32,6 +33,7 @@ const initialState: PlanerSliceState = {
       { coordinates: undefined, osmPointId: undefined, order: 0, name: "" },
       { coordinates: undefined, osmPointId: undefined, order: 1, name: "" },
     ],
+    roundTrip: false,
   },
   search: {
     trips: [],
@@ -56,6 +58,12 @@ const planerSlice = createSlice({
 
       state.planer.points[action.payload.index].name =
         action.payload.value.name;
+      if (state.planer.roundTrip && action.payload.index === 0) {
+        planerSlice.caseReducers.setPointValueFromPlaceHint(state, {
+          ...action,
+          payload: { ...action.payload, index: state.planer.points.length - 1 },
+        });
+      }
     },
     setPointFromString: (
       state,
@@ -74,6 +82,15 @@ const planerSlice = createSlice({
       } else {
         state.planer.points[action.payload.index].coordinates = undefined;
       }
+      if (state.planer.roundTrip && action.payload.index === 0) {
+        planerSlice.caseReducers.setPointFromString(state, {
+          ...action,
+          payload: {
+            ...action.payload,
+            index: state.planer.points.length - 1,
+          },
+        });
+      }
     },
     clearPoint: (state, action: PayloadAction<{ index: number }>) => {
       state.planer.points[action.payload.index] = {
@@ -82,14 +99,32 @@ const planerSlice = createSlice({
         order: action.payload.index,
         name: "",
       };
+      if (state.planer.roundTrip && action.payload.index === 0) {
+        planerSlice.caseReducers.clearPoint(state, {
+          ...action,
+          payload: { index: state.planer.points.length - 1 },
+        });
+      }
     },
     addEmptyPoint: (state) => {
-      state.planer.points.push({
-        coordinates: undefined,
-        osmPointId: undefined,
-        order: state.planer.points.length,
-        name: "",
-      });
+      if (state.planer.roundTrip) {
+        state.planer.points.splice(state.planer.points.length - 1, 0, {
+          coordinates: undefined,
+          osmPointId: undefined,
+          order: state.planer.points.length - 1,
+          name: "",
+        });
+        state.planer.points[state.planer.points.length - 1].order =
+          state.planer.points.length - 1;
+        return;
+      } else {
+        state.planer.points.push({
+          coordinates: undefined,
+          osmPointId: undefined,
+          order: state.planer.points.length,
+          name: "",
+        });
+      }
     },
     changePointsOrder: (
       state,
@@ -107,11 +142,27 @@ const planerSlice = createSlice({
         0,
         sourcePoint
       );
+      if (
+        state.planer.roundTrip &&
+        (action.payload.destinationIndex === 0 ||
+          action.payload.sourceIndex === 0 ||
+          action.payload.destinationIndex === state.planer.points.length - 1 ||
+          action.payload.sourceIndex === state.planer.points.length - 1)
+      ) {
+        state.planer.roundTrip = false;
+      }
       state.planer.points.forEach((point, index) => (point.order = index));
     },
     removePoint: (state, action: PayloadAction<{ index: number }>) => {
       state.planer.points.splice(action.payload.index, 1);
       state.planer.points.forEach((point, index) => (point.order = index));
+      if (
+        state.planer.roundTrip &&
+        (action.payload.index === 0 ||
+          action.payload.index === state.planer.points.length)
+      ) {
+        state.planer.roundTrip = false;
+      }
     },
     setFoundRoute: (
       state,
@@ -130,6 +181,13 @@ const planerSlice = createSlice({
       state.planer.points[
         state.planer.focusedPointIndex
       ].name = `${coordinates[1]},${coordinates[0]}`;
+      if (state.planer.roundTrip && state.planer.focusedPointIndex === 0) {
+        state.planer.points[state.planer.points.length - 1].coordinates =
+          coordinates;
+        state.planer.points[
+          state.planer.points.length - 1
+        ].name = `${coordinates[1]},${coordinates[0]}`;
+      }
     },
     setPointsAndRouteFromGeoJson: (
       state,
@@ -140,7 +198,9 @@ const planerSlice = createSlice({
           coordinates: point.geometry.coordinates as LatLngAlt,
           name:
             point.properties.name ||
-            `${(point.geometry.coordinates as LatLngAlt)[1].toFixed(6)},${(point.geometry.coordinates as LatLngAlt)[0].toFixed(6)}`,
+            `${(point.geometry.coordinates as LatLngAlt)[1].toFixed(6)},${(
+              point.geometry.coordinates as LatLngAlt
+            )[0].toFixed(6)}`,
           order: index,
         };
       });
@@ -159,6 +219,7 @@ const planerSlice = createSlice({
       state.planer.routeName = undefined;
       state.planer.foundRoute = undefined;
       state.planer.focusedPointIndex = undefined;
+      state.planer.roundTrip = initialState.planer.roundTrip;
     },
     setTrips: (state, action: PayloadAction<ParsedTrip[]>) => {
       state.search.trips = action.payload;
@@ -180,6 +241,12 @@ const planerSlice = createSlice({
     },
     clearFocusedTripId: (state) => {
       state.search.focusedTripId = undefined;
+    },
+    setRoundTrip: (state, action: PayloadAction<boolean>) => {
+      state.planer.roundTrip = action.payload;
+      const firstPointCopy = structuredClone(current(state.planer.points[0]));
+      firstPointCopy.order = state.planer.points.length - 1;
+      state.planer.points[state.planer.points.length - 1] = firstPointCopy;
     },
   },
 });

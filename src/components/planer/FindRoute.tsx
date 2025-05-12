@@ -11,13 +11,14 @@ import {
   Point,
   TripTypes,
 } from "../../types/api/trips";
-import { Button, Divider } from "@mui/material";
+import { Button, Divider, FormControlLabel, Switch } from "@mui/material";
 import PointsList from "./PointsList";
 import { Route, UploadFile } from "@mui/icons-material";
 import useHttp from "../../hooks/useHttp";
 import { API_CALL_URL_BASE } from "../../utils/constants";
-import { useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { RouteFormatConverter } from "../../utils/routeFormatConverter";
+import { planerSliceActions } from "../../redux/planerSlice";
 
 type FindRouteProps = {
   onHintSelected: (hint: PlaceHintParsed) => void;
@@ -43,7 +44,10 @@ const FindRoute = (props: FindRouteProps) => {
     `${API_CALL_URL_BASE}/find-route`
   );
 
+
   const planerState = useAppSelector((state) => state.planerState);
+
+  const dispatch = useAppDispatch();
 
   const handleFindRouteResponse = useCallback((response: Response) => {
     return response.json().then((data: GraphHopperApiSuccessResponse) => {
@@ -70,6 +74,27 @@ const FindRoute = (props: FindRouteProps) => {
           onCategoryChange(category);
         }}
         activeCategory={category}
+      />
+      <FormControlLabel
+        control={
+          <Switch
+            sx={{
+              ".Mui-checked": {
+                ".MuiSwitch-thumb": { color: "#00883b" },
+              },
+              ".MuiSwitch-track": {
+                backgroundColor: "#00883b !important",
+              },
+            }}
+            checked={planerState.planer.roundTrip}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              dispatch(
+                planerSliceActions.setRoundTrip(event.target.checked)
+              );
+            }}
+          />
+        }
+        label="Pętla"
       />
       <PointsList onHintSelected={onHintSelected} />
       <Button
@@ -135,7 +160,10 @@ const FindRoute = (props: FindRouteProps) => {
                 if (!route) return;
                 if (points.length === 0) {
                   const firstPoint = route.geometry.coordinates[0];
-                  const lastPoint = route.geometry.coordinates[route.geometry.coordinates.length - 1];
+                  const lastPoint =
+                    route.geometry.coordinates[
+                      route.geometry.coordinates.length - 1
+                    ];
                   points.push({
                     type: "Feature",
                     geometry: {
