@@ -152,7 +152,7 @@ const Detail = () => {
         />
       )}
       <div className="container main py-5 detail">
-        {isLoading || !trip ? (
+        {true || !trip ? (
           <ContentLoading coverParent />
         ) : (
           <div className="row">
