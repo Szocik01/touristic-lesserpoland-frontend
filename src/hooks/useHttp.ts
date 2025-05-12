@@ -15,6 +15,9 @@ export default function useHttp(url: string, initialLoadingState: boolean = fals
       requestOptions = { method: "GET", ...requestOptions };
       return fetch(`${url}${urlParameters}`, requestOptions)
         .then((response) => {
+          if(!response.ok){
+            throw response;
+          }
           return handleResponse(response);
         })
         .catch((error) => {
