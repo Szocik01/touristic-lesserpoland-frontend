@@ -15,8 +15,10 @@ import {
   Source,
   MapRef,
   CircleLayer,
+  MapProvider,
 } from "react-map-gl/maplibre";
 import { getBoundsFromRoute } from "../../utils/mapFunctions";
+import MapButtons from "../shared/MapButtons";
 
 type DetailMapProps = {
   route: GeoJsonLineString;
@@ -63,50 +65,53 @@ const DetailMap = (props: DetailMapProps) => {
 
   return (
     <div className="map">
-      <Map
-        onLoad={(map) => {
-          if (!route) return;
-          const bounds = getBoundsFromRoute(route.coordinates);
+      <MapProvider>
+        <MapButtons />
+        <Map
+          onLoad={(map) => {
+            if (!route) return;
+            const bounds = getBoundsFromRoute(route.coordinates);
 
-          map.target.fitBounds(bounds, {
-            padding: 70,
-            duration: 1200,
-          });
-        }}
-        ref={mapRef}
-        id="detail-map"
-        scrollZoom
-        initialViewState={{
-          zoom: 11,
-          longitude: 19.937135,
-          latitude: 50.058445,
-        }}
-        mapStyle={mapTilesConfig}
-        maxBounds={[
-          [18.764047, 49.100377],
-          [21.415273, 50.516964],
-        ]}
-      >
-        <Source id="route" type="geojson" data={route}>
-          <Layer {...routeLayer} />
-          {points.map((point, index) => {
-            return (
-              <Marker
-                key={index}
-                longitude={point.coordinates.coordinates[0]}
-                latitude={point.coordinates.coordinates[1]}
-              >
-                <Pin width={26} text={String.fromCharCode(65 + index)} />
-              </Marker>
-            );
-          })}
-        </Source>
-        {circleSource && (
-          <Source id="elevation-marker" type="geojson" data={circleSource}>
-            <Layer {...circleLayer} />
+            map.target.fitBounds(bounds, {
+              padding: 70,
+              duration: 1200,
+            });
+          }}
+          ref={mapRef}
+          id="detail-map"
+          scrollZoom
+          initialViewState={{
+            zoom: 11,
+            longitude: 19.937135,
+            latitude: 50.058445,
+          }}
+          mapStyle={mapTilesConfig}
+          maxBounds={[
+            [18.764047, 49.100377],
+            [21.415273, 50.516964],
+          ]}
+        >
+          <Source id="route" type="geojson" data={route}>
+            <Layer {...routeLayer} />
+            {points.map((point, index) => {
+              return (
+                <Marker
+                  key={index}
+                  longitude={point.coordinates.coordinates[0]}
+                  latitude={point.coordinates.coordinates[1]}
+                >
+                  <Pin width={26} text={String.fromCharCode(65 + index)} />
+                </Marker>
+              );
+            })}
           </Source>
-        )}
-      </Map>
+          {circleSource && (
+            <Source id="elevation-marker" type="geojson" data={circleSource}>
+              <Layer {...circleLayer} />
+            </Source>
+          )}
+        </Map>
+      </MapProvider>
     </div>
   );
 };

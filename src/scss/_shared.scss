@@ -511,6 +511,16 @@
   color: $color-error;
 }
 
+.map-buttons-container{
+  position: absolute;
+  top: 1rem;
+  right: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
 @keyframes show-and-fill-svg {
   50% {
     opacity: 1;
