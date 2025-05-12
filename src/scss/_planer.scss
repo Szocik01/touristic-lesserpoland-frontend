@@ -14,7 +14,7 @@
   left: 1rem;
   z-index: 100;
   display: flex;
-  transition:  transform 0.3s ease !important;
+  transition: transform 0.3s ease !important;
 
   flex-direction: column;
   .expand-panel-button {
@@ -192,15 +192,22 @@
   align-self: center;
 }
 
-.upload-file-container{
+.upload-file-container {
   width: 100%;
   position: relative;
-  .gpx-file-label{
-    position:absolute;
+  .gpx-file-label {
+    position: absolute;
     inset: 0;
     z-index: 10;
     cursor: pointer;
   }
+}
+
+.round-trip-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  align-items: center;
 }
 
 .search-trip-container {

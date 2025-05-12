@@ -11,9 +11,15 @@ import {
   Point,
   TripTypes,
 } from "../../types/api/trips";
-import { Button, Divider, FormControlLabel, Switch } from "@mui/material";
+import {
+  Button,
+  Divider,
+  FormControlLabel,
+  Switch,
+  Tooltip,
+} from "@mui/material";
 import PointsList from "./PointsList";
-import { Route, UploadFile } from "@mui/icons-material";
+import { HelpOutline, Route, UploadFile } from "@mui/icons-material";
 import useHttp from "../../hooks/useHttp";
 import { API_CALL_URL_BASE } from "../../utils/constants";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
@@ -43,7 +49,6 @@ const FindRoute = (props: FindRouteProps) => {
   const [sendFindRouteRequest, isLoading] = useHttp(
     `${API_CALL_URL_BASE}/find-route`
   );
-
 
   const planerState = useAppSelector((state) => state.planerState);
 
@@ -75,27 +80,34 @@ const FindRoute = (props: FindRouteProps) => {
         }}
         activeCategory={category}
       />
-      <FormControlLabel
-        control={
-          <Switch
-            sx={{
-              ".Mui-checked": {
-                ".MuiSwitch-thumb": { color: "#00883b" },
-              },
-              ".MuiSwitch-track": {
-                backgroundColor: "#00883b !important",
-              },
-            }}
-            checked={planerState.planer.roundTrip}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              dispatch(
-                planerSliceActions.setRoundTrip(event.target.checked)
-              );
-            }}
-          />
-        }
-        label="Pętla"
-      />
+      <div className="round-trip-container">
+        <FormControlLabel
+          control={
+            <Switch
+              sx={{
+                ".Mui-checked": {
+                  ".MuiSwitch-thumb": { color: "#00883b" },
+                },
+                ".MuiSwitch-track": {
+                  backgroundColor: "#00883b !important",
+                },
+              }}
+              checked={planerState.planer.roundTrip}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                dispatch(planerSliceActions.setRoundTrip(event.target.checked));
+              }}
+            />
+          }
+          label="Pętla"
+        />
+        <Tooltip
+          title="Zaznaczenie spowoduje, że pierwszy i ostatni punkt trasy będą takie same."
+          placement="bottom"
+        >
+          <HelpOutline sx={{color:"gray"}}/>
+        </Tooltip>
+      </div>
+
       <PointsList onHintSelected={onHintSelected} />
       <Button
         fullWidth
