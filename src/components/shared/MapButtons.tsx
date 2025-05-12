@@ -18,9 +18,6 @@ const MapButtons = () => {
   const maps = useMap();
   const map = Object.values(maps)[0];
 
-  console.log("MapButtons", maps);
-
-  console.log("MapButtons", map);
   return (
     <div className="map-buttons-container">
       {map && (
